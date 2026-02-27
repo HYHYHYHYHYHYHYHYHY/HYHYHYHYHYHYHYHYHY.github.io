@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hiromi Yasuta - Portfolio</title>
+  <title>Your Name - Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root {
@@ -36,7 +36,7 @@
     header {
       min-height: 100vh; display: flex; flex-direction: column;
       justify-content: center; align-items: center; text-align: center;
-      padding: 100px 20px 60px;
+      padding: 100px 20px 60px; position: relative;
       background: radial-gradient(ellipse at 60% 40%, rgba(108,99,255,0.18) 0%, transparent 60%),
                   radial-gradient(ellipse at 20% 80%, rgba(72,207,173,0.12) 0%, transparent 55%),
                   var(--dark);
@@ -63,6 +63,32 @@
     }
     .btn-outline:hover { border-color: var(--accent); transform: translateY(-2px); }
 
+    /* SCROLL DOWN INDICATOR */
+    .scroll-down {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--muted); font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+      text-decoration: none; transition: color 0.3s;
+      animation: fadeInUp 1.2s ease 0.8s both;
+    }
+    .scroll-down:hover { color: var(--white); }
+    .scroll-down .chevrons { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .scroll-down .chevron {
+      width: 18px; height: 18px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+      transform: rotate(45deg);
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    .scroll-down .chevron:nth-child(2) { animation-delay: 0.18s; opacity: 0.6; }
+    .scroll-down .chevron:nth-child(3) { animation-delay: 0.36s; opacity: 0.3; }
+    @keyframes bounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50% { transform: rotate(45deg) translateY(5px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
     /* SECTIONS */
     .container { max-width: 960px; margin: 0 auto; padding: 100px 24px; }
     .section-label {
@@ -74,12 +100,7 @@
 
     /* ABOUT */
     .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: 48px; align-items: center; }
-    .avatar-wrap { position: relative; }
-    .avatar {
-      width: 180px; height: 180px; border-radius: 20px; object-fit: cover;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      display: block;
-    }
+    .avatar { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: block; }
     .about-text p { color: var(--muted); line-height: 1.85; font-size: 1rem; }
 
     /* SKILLS */
@@ -93,41 +114,80 @@
     .skill-card:hover { border-color: var(--accent); transform: translateY(-4px); }
     .skill-card .icon { font-size: 1.6rem; margin-bottom: 10px; }
 
-    /* EXPERIENCE */
+    /* EXPERIENCE — expandable */
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: rgba(108,99,255,0.25); }
-    .timeline-item { position: relative; margin-bottom: 40px; }
+    .timeline-item { position: relative; margin-bottom: 24px; }
     .timeline-item::before {
-      content: ''; position: absolute; left: -34px; top: 6px;
+      content: ''; position: absolute; left: -34px; top: 14px;
       width: 12px; height: 12px; border-radius: 50%;
       background: var(--accent); border: 2px solid var(--dark);
     }
-    .timeline-item h3 { font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 4px; }
-    .timeline-item .company { color: var(--accent2); font-size: 0.9rem; font-weight: 500; margin-bottom: 4px; }
-    .timeline-item .date { color: var(--muted); font-size: 0.82rem; margin-bottom: 10px; }
-    .timeline-item p { color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
+    .exp-header {
+      background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px; padding: 18px 22px; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: border-color 0.3s;
+      user-select: none;
+    }
+    .exp-header:hover { border-color: var(--accent); }
+    .exp-header-left h3 { font-size: 1rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .exp-header-left .company { color: var(--accent2); font-size: 0.88rem; font-weight: 500; }
+    .exp-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+    .exp-header-right .date { color: var(--muted); font-size: 0.8rem; white-space: nowrap; }
+    .exp-toggle {
+      font-size: 0.75rem; color: var(--accent); font-weight: 600; letter-spacing: 1px;
+      display: flex; align-items: center; gap: 5px; transition: opacity 0.2s;
+    }
+    .exp-toggle .arrow { display: inline-block; transition: transform 0.3s; }
+    .exp-body {
+      overflow: hidden; max-height: 0; transition: max-height 0.4s ease, padding 0.3s ease;
+      background: rgba(26,26,46,0.5); border: 1px solid rgba(255,255,255,0.04);
+      border-top: none; border-radius: 0 0 12px 12px; padding: 0 22px;
+    }
+    .exp-body.open { max-height: 300px; padding: 18px 22px; }
+    .exp-body p { color: var(--muted); font-size: 0.93rem; line-height: 1.75; }
+    .exp-header.open { border-radius: 12px 12px 0 0; border-color: rgba(108,99,255,0.4); }
+    .exp-header.open .arrow { transform: rotate(180deg); }
 
-    /* PROJECTS */
+    /* PROJECTS — expandable */
     .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
     .project-card {
       background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px; padding: 28px; transition: border-color 0.3s, transform 0.2s;
-      display: flex; flex-direction: column;
+      border-radius: 16px; overflow: hidden;
+      transition: border-color 0.3s, transform 0.2s;
     }
-    .project-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+    .project-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+    .project-summary { padding: 24px 24px 16px; }
     .project-tag {
       display: inline-block; background: rgba(108,99,255,0.15); color: var(--accent);
       font-size: 0.72rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 50px; margin-bottom: 14px;
+      padding: 4px 10px; border-radius: 50px; margin-bottom: 12px;
     }
-    .project-card h3 { font-size: 1.1rem; font-weight: 600; color: var(--white); margin-bottom: 10px; }
-    .project-card p { color: var(--muted); font-size: 0.92rem; line-height: 1.65; flex: 1; }
-    .project-card a {
-      display: inline-flex; align-items: center; gap: 6px; margin-top: 20px;
+    .project-summary h3 { font-size: 1.05rem; font-weight: 600; color: var(--white); margin-bottom: 8px; }
+    .project-summary .tagline { color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
+    .project-expand-btn {
+      width: 100%; background: none; border: none; border-top: 1px solid rgba(255,255,255,0.05);
+      color: var(--accent); font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;
+      padding: 12px 24px; cursor: pointer; text-align: left;
+      display: flex; align-items: center; gap: 6px;
+      font-family: inherit; transition: background 0.2s;
+    }
+    .project-expand-btn:hover { background: rgba(108,99,255,0.07); }
+    .project-expand-btn .arrow { display: inline-block; transition: transform 0.3s; }
+    .project-expand-btn.open .arrow { transform: rotate(180deg); }
+    .project-details {
+      overflow: hidden; max-height: 0; transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 24px; border-top: 0px solid rgba(255,255,255,0.05);
+    }
+    .project-details.open { max-height: 220px; padding: 16px 24px 20px; border-top-width: 1px; }
+    .project-details p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 14px; }
+    .project-details a {
+      display: inline-flex; align-items: center; gap: 6px;
       color: var(--accent); font-size: 0.88rem; font-weight: 600; text-decoration: none;
       transition: gap 0.2s;
     }
-    .project-card a:hover { gap: 10px; }
+    .project-details a:hover { gap: 10px; }
 
     /* CONTACT */
     .contact-box {
@@ -144,16 +204,15 @@
     .contact-links .primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
     .contact-links .ghost { border: 1px solid rgba(255,255,255,0.15); color: var(--white); }
 
-    /* FOOTER */
     footer { text-align: center; padding: 32px; border-top: 1px solid rgba(255,255,255,0.06); color: var(--muted); font-size: 0.85rem; }
 
-    /* RESPONSIVE */
     @media (max-width: 640px) {
       nav { padding: 16px 24px; }
       .nav-links { gap: 20px; }
       .about-grid { grid-template-columns: 1fr; text-align: center; }
       .avatar { margin: 0 auto; }
       .contact-box { padding: 36px 24px; }
+      .exp-header { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
 </head>
@@ -174,33 +233,36 @@
   <!-- HERO -->
   <header>
     <div class="hero-tag">Available for hire</div>
-    <h1>Hi, I'm <span>Hiromi</span></h1>
-    <p>HRIS and Data Analyst based in Toronto.</p>
+    <h1>Hi, I'm <span>Your Name</span></h1>
+    <p>A passionate [Your Role] building thoughtful digital experiences. Based in [Your Location].</p>
     <div class="hero-btns">
       <a href="#projects" class="btn-primary">View My Work</a>
       <a href="#contact" class="btn-outline">Get in Touch</a>
     </div>
+
+    <!-- SCROLL DOWN -->
+    <a href="#about" class="scroll-down" aria-label="Scroll down">
+      <span>Scroll down</span>
+      <span class="chevrons">
+        <span class="chevron"></span>
+        <span class="chevron"></span>
+        <span class="chevron"></span>
+      </span>
+    </a>
   </header>
 
-  <!-- ABOUT -->
   <div class="container">
+
+    <!-- ABOUT -->
     <section id="about">
       <div class="section-label">About</div>
       <h2>A little about me</h2>
       <div class="about-grid">
-        <div class="avatar-wrap">
-          <img class="avatar" src="your-photo.jpg" alt="Hiromi Yasuta" />
-        </div>
+        <img class="avatar" src="your-photo.jpg" alt="Your Name" />
         <div class="about-text">
-          <p>
-            Hi! I'm <strong style="color:#fff">Hiromi Yasuta</strong>, a [Your Role] with a passion for [what you love].
-            I enjoy working on [types of projects] and am always looking for new challenges to grow from.
-            Replace this with your own story!
-          </p>
+          <p>Hi! I'm <strong style="color:#fff">Your Name</strong>, a [Your Role] with a passion for [what you love]. I enjoy working on [types of projects] and am always looking for new challenges to grow from.</p>
           <br/>
-          <p style="color:#666">
-            When I'm not coding, you'll find me [hobbies / interests]. I believe great work comes from curiosity, collaboration, and a lot of coffee.
-          </p>
+          <p style="color:#666">When I'm not coding, you'll find me [hobbies / interests]. I believe great work comes from curiosity, collaboration, and a lot of coffee.</p>
         </div>
       </div>
     </section>
@@ -210,12 +272,12 @@
       <div class="section-label">Skills</div>
       <h2>What I work with</h2>
       <div class="skills-grid">
-        <div class="skill-card"><div class="icon">⚡</div>Skill One</div>
-        <div class="skill-card"><div class="icon">🎨</div>Skill Two</div>
-        <div class="skill-card"><div class="icon">🛠️</div>Skill Three</div>
-        <div class="skill-card"><div class="icon">📦</div>Skill Four</div>
-        <div class="skill-card"><div class="icon">🔗</div>Skill Five</div>
-        <div class="skill-card"><div class="icon">🚀</div>Skill Six</div>
+        <div class="skill-card"><div class="icon">&#9889;</div>Skill One</div>
+        <div class="skill-card"><div class="icon">&#127912;</div>Skill Two</div>
+        <div class="skill-card"><div class="icon">&#128296;</div>Skill Three</div>
+        <div class="skill-card"><div class="icon">&#128230;</div>Skill Four</div>
+        <div class="skill-card"><div class="icon">&#128279;</div>Skill Five</div>
+        <div class="skill-card"><div class="icon">&#128640;</div>Skill Six</div>
       </div>
     </section>
 
@@ -226,17 +288,35 @@
       <div class="timeline">
 
         <div class="timeline-item">
-          <h3>Job Title</h3>
-          <div class="company">Company Name</div>
-          <div class="date">Month Year &ndash; Month Year</div>
-          <p>Describe your key responsibilities and achievements. What did you build, improve, or lead? Quantify results where possible.</p>
+          <div class="exp-header" onclick="toggleExp(this)">
+            <div class="exp-header-left">
+              <h3>Job Title</h3>
+              <div class="company">Company Name</div>
+            </div>
+            <div class="exp-header-right">
+              <span class="date">Month Year &ndash; Month Year</span>
+              <span class="exp-toggle">Details <span class="arrow">&#8964;</span></span>
+            </div>
+          </div>
+          <div class="exp-body">
+            <p>Describe your key responsibilities and achievements. What did you build, improve, or lead? Quantify results where possible.</p>
+          </div>
         </div>
 
         <div class="timeline-item">
-          <h3>Job Title</h3>
-          <div class="company">Company Name</div>
-          <div class="date">Month Year &ndash; Month Year</div>
-          <p>Describe your key responsibilities and achievements. What did you build, improve, or lead? Quantify results where possible.</p>
+          <div class="exp-header" onclick="toggleExp(this)">
+            <div class="exp-header-left">
+              <h3>Job Title</h3>
+              <div class="company">Company Name</div>
+            </div>
+            <div class="exp-header-right">
+              <span class="date">Month Year &ndash; Month Year</span>
+              <span class="exp-toggle">Details <span class="arrow">&#8964;</span></span>
+            </div>
+          </div>
+          <div class="exp-body">
+            <p>Describe your key responsibilities and achievements. What did you build, improve, or lead? Quantify results where possible.</p>
+          </div>
         </div>
 
       </div>
@@ -249,24 +329,48 @@
       <div class="projects-grid">
 
         <div class="project-card">
-          <span class="project-tag">Web App</span>
-          <h3>Project Name</h3>
-          <p>Brief description of what this project does and the technologies used to build it.</p>
-          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          <div class="project-summary">
+            <span class="project-tag">Web App</span>
+            <h3>Project Name</h3>
+            <p class="tagline">One-line description of what this project does.</p>
+          </div>
+          <button class="project-expand-btn" onclick="toggleProject(this)">
+            Read more <span class="arrow">&#8964;</span>
+          </button>
+          <div class="project-details">
+            <p>Full description of the project, the problem it solves, the tech stack used, and any outcomes or impact.</p>
+            <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          </div>
         </div>
 
         <div class="project-card">
-          <span class="project-tag">Tool</span>
-          <h3>Project Name</h3>
-          <p>Brief description of what this project does and the technologies used to build it.</p>
-          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          <div class="project-summary">
+            <span class="project-tag">Tool</span>
+            <h3>Project Name</h3>
+            <p class="tagline">One-line description of what this project does.</p>
+          </div>
+          <button class="project-expand-btn" onclick="toggleProject(this)">
+            Read more <span class="arrow">&#8964;</span>
+          </button>
+          <div class="project-details">
+            <p>Full description of the project, the problem it solves, the tech stack used, and any outcomes or impact.</p>
+            <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          </div>
         </div>
 
         <div class="project-card">
-          <span class="project-tag">Design</span>
-          <h3>Project Name</h3>
-          <p>Brief description of what this project does and the technologies used to build it.</p>
-          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          <div class="project-summary">
+            <span class="project-tag">Design</span>
+            <h3>Project Name</h3>
+            <p class="tagline">One-line description of what this project does.</p>
+          </div>
+          <button class="project-expand-btn" onclick="toggleProject(this)">
+            Read more <span class="arrow">&#8964;</span>
+          </button>
+          <div class="project-details">
+            <p>Full description of the project, the problem it solves, the tech stack used, and any outcomes or impact.</p>
+            <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+          </div>
         </div>
 
       </div>
@@ -277,7 +381,7 @@
       <div class="section-label">Contact</div>
       <h2>Let's work together</h2>
       <div class="contact-box">
-        <p>I'm currently open to new opportunities. Whether you have a project in mind, a question, or just want to say hi — my inbox is always open.</p>
+        <p>I'm currently open to new opportunities. Whether you have a project in mind, a question, or just want to say hi &mdash; my inbox is always open.</p>
         <div class="contact-links">
           <a href="mailto:your@email.com" class="primary">Send an Email</a>
           <a href="https://linkedin.com/in/yourprofile" target="_blank" class="ghost">LinkedIn</a>
@@ -285,11 +389,30 @@
         </div>
       </div>
     </section>
+
   </div>
 
   <footer>
-    <p>Designed &amp; built by <strong style="color:#fff">Hiromi Yasuta</strong> &mdash; &copy; 2026</p>
+    <p>Designed &amp; built by <strong style="color:#fff">Your Name</strong> &mdash; &copy; 2026</p>
   </footer>
+
+  <script>
+    function toggleExp(header) {
+      const body = header.nextElementSibling;
+      const isOpen = body.classList.contains('open');
+      // Close all others
+      document.querySelectorAll('.exp-body.open').forEach(b => { b.classList.remove('open'); b.previousElementSibling.classList.remove('open'); });
+      if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+    }
+
+    function toggleProject(btn) {
+      const details = btn.nextElementSibling;
+      const isOpen = details.classList.contains('open');
+      details.classList.toggle('open', !isOpen);
+      btn.classList.toggle('open', !isOpen);
+      btn.childNodes[0].textContent = isOpen ? ' Read more ' : ' Show less ';
+    }
+  </script>
 
 </body>
 </html>
