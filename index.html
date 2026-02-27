@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name - Portfolio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; color: #333; background: #f9f9f9; }
+    header { background: #1a1a2e; color: white; padding: 60px 20px; text-align: center; }
+    header h1 { font-size: 2.8rem; margin-bottom: 10px; }
+    header p { font-size: 1.2rem; color: #a8dadc; }
+    nav { background: #16213e; display: flex; justify-content: center; gap: 30px; padding: 15px; }
+    nav a { color: #a8dadc; text-decoration: none; font-weight: 600; transition: color 0.3s; }
+    nav a:hover { color: white; }
+    .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+    section { margin-bottom: 60px; }
+    section h2 { font-size: 1.8rem; border-bottom: 3px solid #1a1a2e; padding-bottom: 10px; margin-bottom: 20px; }
+    .about-grid { display: flex; gap: 30px; align-items: center; }
+    .avatar { width: 150px; height: 150px; border-radius: 50%; background: #ccc; flex-shrink: 0; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+    .skill-card { background: white; border-radius: 8px; padding: 15px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .experience-item, .project-card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .experience-item h3 { font-size: 1.2rem; color: #1a1a2e; }
+    .experience-item .date { color: #888; font-size: 0.9rem; margin: 5px 0; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .project-card h3 { color: #1a1a2e; margin-bottom: 10px; }
+    .project-card a { display: inline-block; margin-top: 10px; color: #1a1a2e; font-weight: bold; text-decoration: none; }
+    .contact-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .contact-links a { background: #1a1a2e; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; }
+    .contact-links a:hover { background: #16213e; }
+    footer { text-align: center; padding: 30px; background: #1a1a2e; color: #a8dadc; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Your Name</h1>
+    <p>Your Title &mdash; Developer | Designer | Creator</p>
+  </header>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <img class="avatar" src="your-photo.jpg" alt="Your Name" />
+        <p>
+          Hi! I'm <strong>Your Name</strong>, a passionate [Your Role] based in [Your Location].
+          I love building [what you love doing] and I'm always looking for new challenges.
+          Replace this paragraph with your own introduction!
+        </p>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="skills-grid">
+        <div class="skill-card">Skill 1</div>
+        <div class="skill-card">Skill 2</div>
+        <div class="skill-card">Skill 3</div>
+        <div class="skill-card">Skill 4</div>
+        <div class="skill-card">Skill 5</div>
+        <div class="skill-card">Skill 6</div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience">
+      <h2>Experience</h2>
+
+      <div class="experience-item">
+        <h3>Job Title &mdash; Company Name</h3>
+        <div class="date">Month Year &ndash; Month Year</div>
+        <p>Describe your responsibilities and achievements in this role. What impact did you make?</p>
+      </div>
+
+      <div class="experience-item">
+        <h3>Job Title &mdash; Company Name</h3>
+        <div class="date">Month Year &ndash; Month Year</div>
+        <p>Describe your responsibilities and achievements in this role. What impact did you make?</p>
+      </div>
+
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="projects-grid">
+
+        <div class="project-card">
+          <h3>Project Name</h3>
+          <p>Brief description of what this project does and what technologies you used to build it.</p>
+          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Project Name</h3>
+          <p>Brief description of what this project does and what technologies you used to build it.</p>
+          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+        </div>
+
+        <div class="project-card">
+          <h3>Project Name</h3>
+          <p>Brief description of what this project does and what technologies you used to build it.</p>
+          <a href="https://github.com/yourusername/project" target="_blank">View on GitHub &rarr;</a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact</h2>
+      <p style="margin-bottom: 20px;">Feel free to reach out! I'm always open to new opportunities and collaborations.</p>
+      <div class="contact-links">
+        <a href="mailto:your@email.com">Email Me</a>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2026 Your Name. Built with GitHub Pages.</p>
+  </footer>
+</body>
+</html>
