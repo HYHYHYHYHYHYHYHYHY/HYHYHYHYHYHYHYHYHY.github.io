@@ -3,8 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--
+    QUICK CHEAT SHEET
+    - HTML = structure/content (headings, sections, text, links, images)
+      Example: <section id="skills"> ... </section>
+    - CSS = design/style (colors, spacing, fonts, layout)
+      Example: #skills { margin-top: 32px; }
+    - JavaScript = behavior (click actions, show/hide, interactions)
+      Example: function toggleProject(btn) { ... }
+  -->
   <title>Hiromi Yasuta - Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- CSS START -->
   <style>
     :root {
       --accent: #6c63ff;
@@ -99,11 +109,13 @@
     section h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; color: var(--white); margin-bottom: 40px; }
 
     /* ABOUT */
+    #about { margin-top: 32px; }
     .about-grid { display: grid; grid-template-columns: 180px 1fr; gap: 48px; align-items: center; }
     .avatar { width: 180px; height: 180px; border-radius: 20px; object-fit: cover; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: block; }
     .about-text p { color: var(--muted); line-height: 1.85; font-size: 1rem; }
 
     /* SKILLS */
+    #skills { margin-top: 32px; }
     .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; }
     .skill-card {
       background: var(--card-bg); border: 1px solid rgba(255,255,255,0.06);
@@ -115,6 +127,7 @@
     .skill-card .icon { font-size: 1.6rem; margin-bottom: 10px; }
 
     /* EXPERIENCE — expandable */
+    #experience { margin-top: 32px; }
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: rgba(108,99,255,0.25); }
     .timeline-item { position: relative; margin-bottom: 24px; }
@@ -215,7 +228,9 @@
       .exp-header { flex-direction: column; align-items: flex-start; gap: 8px; }
     }
   </style>
+  <!-- CSS END -->
 </head>
+<!-- HTML START -->
 <body>
 
   <!-- NAV -->
@@ -272,12 +287,14 @@
       <div class="section-label">Skills</div>
       <h2>What I work with</h2>
       <div class="skills-grid">
-        <div class="skill-card"><div class="icon">&#9889;</div>Skill One</div>
-        <div class="skill-card"><div class="icon">&#127912;</div>Skill Two</div>
-        <div class="skill-card"><div class="icon">&#128296;</div>Skill Three</div>
-        <div class="skill-card"><div class="icon">&#128230;</div>Skill Four</div>
-        <div class="skill-card"><div class="icon">&#128279;</div>Skill Five</div>
-        <div class="skill-card"><div class="icon">&#128640;</div>Skill Six</div>
+        <div class="skill-card"><div class="icon">&#9889;</div>MS Excel (Pivot Tables, Power Query, VBA)</div>
+        <div class="skill-card"><div class="icon">&#127912;</div>Power BI</div>
+        <div class="skill-card"><div class="icon">&#128296;</div>SQL</div>
+        <div class="skill-card"><div class="icon">&#128230;</div>Python</div>
+        <div class="skill-card"><div class="icon">&#128230;</div>Scripting (VBA, Office Script, Powershell)</div>
+        <div class="skill-card"><div class="icon">&#128279;</div>Workday</div>
+        <div class="skill-card"><div class="icon">&#128640;</div>Dayforce</div>
+        <div class="skill-card"><div class="icon">&#128640;</div>Project Management (CAPM)</div> 
       </div>
     </section>
 
@@ -299,7 +316,7 @@
               </div>
             </div>
             <div class="exp-body">
-              <p>Worked on major data integration projects, including 2,500+ hourly workers and multiple M&A acquisitions for Canada and US, centralizing 186,000 data fields across Workday and Dayforce. Drove data cleanup initiatives, developed SOPs and process maps, leveraged VBA/Power Query/Office Script for reporting, and served as primary Workday SiteHR (System Admin) user.</p>
+              <p>Worked on major data integration projects, including 2,500+ hourly workers and multiple M&A acquisitions for Canada and US, centralizing 186,000 data fields across Workday and Dayforce. Drove data cleanup initiatives, developed SOPs and process maps, leveraged VBA/Power Query/Office Script for reporting and error logging, and served as primary Workday SiteHR (System Admin) user.</p>
             </div>
           </div>
 
@@ -315,7 +332,7 @@
               </div>
             </div>
             <div class="exp-body">
-              <p>Monthly reporting on headcount, turnover, and hiring using Excel and Power BI. Automated Workday ATS data loads into the TA Tracker via Excel VBA macros. Built the end-to-end Headcount Budget Tracker from scratch, collaborating with Finance and HRBPs for annual forecasting and budgeting.</p>
+              <p>Monthly reporting on headcount, position vacancy, turnover (attrition), and hiring using Excel and Power BI. Automated Workday ATS data loads into the TA Tracker via Excel VBA macros. Built the end-to-end Headcount Budget Tracker from scratch, collaborating with Finance and HRBPs for annual forecasting and budgeting. Ad hoc analysis such as workload pareto analysis for process improvement initiatives.</p>
             </div>
           </div>
 
@@ -492,6 +509,7 @@
     <p>Designed &amp; built by <strong style="color:#fff">Hiromi Yasuta</strong> &mdash; &copy; 2026</p>
   </footer>
 
+  <!-- JAVASCRIPT START -->
   <script>
     function toggleExp(header) {
       const body = header.nextElementSibling;
@@ -509,6 +527,8 @@
       btn.childNodes[0].textContent = isOpen ? ' Read more ' : ' Show less ';
     }
   </script>
+  <!-- JAVASCRIPT END -->
 
 </body>
+<!-- HTML END -->
 </html>
